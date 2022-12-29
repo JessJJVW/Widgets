@@ -23,3 +23,10 @@
   font-size: 18px;
   margin-left: 8px;
 }
+
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}

@@ -1,0 +1,97 @@
+<div id="clock">
+  <div id="message">Copied!</div>
+  <div id="time">
+    <span id="hours">00</span>:<span id="minutes">00</span>
+    <span id="period">AM</span>
+  </div>
+</div>
+
+<style>
+#clock {
+  position: relative;
+  width: 150px;
+  height: 75px;
+  border-radius: 20px;
+  background-color: #222;
+  color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(to bottom, #333, #111);
+  cursor: pointer;
+}
+
+#message {
+  position: absolute;
+  top: 50%;
+  left: 160px;
+  transform: translateY(-50%);
+  display: none;
+  background-color: #8292bc;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+#time {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#period {
+  font-size: 18px;
+  margin-left: 8px;
+}
+</style>
+
+<script>
+function updateClock() {
+  var currentTime = new Date();
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+  var period = "AM";
+
+  // Convert hours to standard (12-hour) time
+  if (hours > 12) {
+    hours -= 12;
+    period = "PM";
+  } else if (hours == 0) {
+    hours = 12;
+  }
+  // Add leading zeros to hours and minutes if necessary
+  hours = (hours < 10) ? hours : "" + hours;
+  minutes = (minutes < 10 ? "0" : "") + minutes;
+
+  // Update the clock's text
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("period").textContent = period;
+}
+
+// Update the clock every minute
+setInterval(updateClock, 60000);
+
+// Initialize the clock with the current time
+updateClock();
+
+// Add a click event listener to the clock element
+document.getElementById("clock").addEventListener("click", function() {
+  // Show the message
+  document.getElementById("message").style.display = "block";
+
+  // Copy the URL of the widget
+  navigator.clipboard.writeText(window.location.href);
+
+  // Hide the message after 2 seconds
+  setTimeout(function() {
+    document.getElementById("message").style.display = "none";
+  }, 2000);
+});
+</script>
